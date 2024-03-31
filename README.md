@@ -10,4 +10,4 @@ Full WhatsApp Flows documentation can be found here https://developers.facebook.
 
 ## License
 WhatsApp Flows Tools is [MIT licensed, as found in the LICENSE file](./LICENSE).
->>>>>>> 8aec9fd (Initial commit)
+
