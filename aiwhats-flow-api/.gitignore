@@ -2,5 +2,7 @@
 private.pem
 public.pem
 /node_modules
+/llama-chatbot-flows/myprojectenv
+/llama-chatbot-flows/llama.cpp
 package-lock.json
 aiwhats-flows-api.yaml
