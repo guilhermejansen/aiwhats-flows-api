@@ -1,0 +1,398 @@
+{
+    "version": "3.1",
+    "data_api_version": "3.0",
+    "routing_model": {
+        "AGENDAMENTO": [
+            "DETALHES"
+        ],
+        "DETALHES": [
+            "RESUMO"
+        ],
+        "RESUMO": [
+            "TERMOS"
+        ],
+        "TERMOS": []
+    },
+    "screens": [
+        {
+            "id": "AGENDAMENTO",
+            "title": "Agendamento",
+            "data": {
+                "department": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "__example__": [
+                        {
+                            "id": "ai",
+                            "title": "Inteligência Artificial Conversacional"
+                        },
+                        {
+                            "id": "web",
+                            "title": "Desenvolvimento Web"
+                        },
+                        {
+                            "id": "automation",
+                            "title": "Automações"
+                        },
+                        {
+                            "id": "consulting",
+                            "title": "Consultoria"
+                        },
+                        {
+                            "id": "mentoring",
+                            "title": "Mentoria"
+                        }
+                    ]
+                },
+                "location": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "__example__": [
+                        {
+                            "id": "online",
+                            "title": "Online"
+                        }
+                    ]
+                },
+                "is_location_enabled": {
+                    "type": "boolean",
+                    "__example__": false
+                },
+                "date": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "__example__": [
+    {"id": "2024-03-11", "title": "Seg 11 Mar 2024"},
+    {"id": "2024-03-12", "title": "Ter 12 Mar 2024"},
+    {"id": "2024-03-13", "title": "Qua 13 Mar 2024"},
+    {"id": "2024-03-14", "title": "Qui 14 Mar 2024"},
+    {"id": "2024-03-15", "title": "Sex 15 Mar 2024"},
+    {"id": "2024-03-18", "title": "Seg 18 Mar 2024"},
+    {"id": "2024-03-19", "title": "Ter 19 Mar 2024"},
+    {"id": "2024-03-20", "title": "Qua 20 Mar 2024"},
+    {"id": "2024-03-21", "title": "Qui 21 Mar 2024"},
+    {"id": "2024-03-22", "title": "Sex 22 Mar 2024"},
+    {"id": "2024-03-25", "title": "Seg 25 Mar 2024"},
+    {"id": "2024-03-26", "title": "Ter 26 Mar 2024"},
+    {"id": "2024-03-27", "title": "Qua 27 Mar 2024"},
+    {"id": "2024-03-28", "title": "Qui 28 Mar 2024"},
+    {"id": "2024-03-29", "title": "Sex 29 Mar 2024"}
+]
+
+                },
+                "is_date_enabled": {
+                    "type": "boolean",
+                    "__example__": true
+                },
+                "time": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "title": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "__example__": [
+                        {
+                            "id": "14:00",
+                            "title": "14:00"
+                        }
+                    ]
+                },
+                "is_time_enabled": {
+                    "type": "boolean",
+                    "__example__": true
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Form",
+                        "name": "appointment_form",
+                        "children": [
+                            {
+                                "type": "Dropdown",
+                                "label": "Serviço",
+                                "name": "department",
+                                "data-source": "${data.department}",
+                                "required": true,
+                                "on-select-action": {
+                                    "name": "data_exchange",
+                                    "payload": {
+                                        "trigger": "department_selected",
+                                        "department": "${form.department}"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "Dropdown",
+                                "label": "Data",
+                                "name": "date",
+                                "data-source": "${data.date}",
+                                "required": "${data.is_date_enabled}",
+                                "enabled": "${data.is_date_enabled}",
+                                "on-select-action": {
+                                    "name": "data_exchange",
+                                    "payload": {
+                                        "trigger": "date_selected",
+                                        "department": "${form.department}",
+                                        "date": "${form.date}"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "Dropdown",
+                                "label": "Horário",
+                                "name": "time",
+                                "data-source": "${data.time}",
+                                "required": "${data.is_time_enabled}",
+                                "enabled": "${data.is_time_enabled}"
+                            },
+                            {
+                                "type": "Footer",
+                                "label": "Continuar",
+                                "on-click-action": {
+                                    "name": "navigate",
+                                    "next": {
+                                        "type": "screen",
+                                        "name": "DETALHES"
+                                    },
+                                    "payload": {
+                                        "department": "${form.department}",
+                                        "date": "${form.date}",
+                                        "time": "${form.time}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "DETALHES",
+            "title": "Detalhes",
+            "data": {
+                "department": {
+                    "type": "string",
+                    "__example__": "ai"
+                },
+                "date": {
+                    "type": "string",
+                    "__example__": "2024-03-01"
+                },
+                "time": {
+                    "type": "string",
+                    "__example__": "14:00"
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Form",
+                        "name": "details_form",
+                        "children": [
+                            {
+                                "type": "TextInput",
+                                "label": "Nome",
+                                "name": "name",
+                                "required": true
+                            },
+                            {
+                                "type": "TextInput",
+                                "label": "E-mail",
+                                "name": "email",
+                                "input-type": "email",
+                                "required": true
+                            },
+                            {
+                                "type": "TextInput",
+                                "label": "Telefone",
+                                "name": "phone",
+                                "input-type": "phone",
+                                "required": true
+                            },
+                            {
+                                "type": "TextArea",
+                                "label": "Mais detalhes",
+                                "name": "more_details",
+                                "helper-text": "Mais detalhes sobre a sua consulta",
+                                "required": false
+                            },
+                            {
+                                "type": "Footer",
+                                "label": "Continuar",
+                                "on-click-action": {
+                                    "name": "data_exchange",
+                                    "payload": {
+                                        "department": "${data.department}",
+                                        "date": "${data.date}",
+                                        "time": "${data.time}",
+                                        "name": "${form.name}",
+                                        "email": "${form.email}",
+                                        "phone": "${form.phone}",
+                                        "more_details": "${form.more_details}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "RESUMO",
+            "title": "Resumo",
+            "terminal": true,
+            "data": {
+                "appointment": {
+                    "type": "string",
+                    "__example__": "Serviço de Inteligência Artificial Conversacional\nSex 01 Mar 2024 às 14:00."
+                },
+                "details": {
+                    "type": "string",
+                    "__example__": "Nome: João Silva\nE-mail: joao@example.com\nTelefone: 123456789\n\nDetalhes adicionais sobre a consulta"
+                },
+                "department": {
+                    "type": "string",
+                    "__example__": "ai"
+                },
+                "date": {
+                    "type": "string",
+                    "__example__": "2024-03-01"
+                },
+                "time": {
+                    "type": "string",
+                    "__example__": "14:00"
+                },
+                "name": {
+                    "type": "string",
+                    "__example__": "João Silva"
+                },
+                "email": {
+                    "type": "string",
+                    "__example__": "joao@example.com"
+                },
+                "phone": {
+                    "type": "string",
+                    "__example__": "123456789"
+                },
+                "more_details": {
+                    "type": "string",
+                    "__example__": "Detalhes adicionais sobre a consulta"
+                }
+            },
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "Form",
+                        "name": "confirmation_form",
+                        "children": [
+                            {
+                                "type": "TextHeading",
+                                "text": "Agendamento"
+                            },
+                            {
+                                "type": "TextBody",
+                                "text": "${data.appointment}"
+                            },
+                            {
+                                "type": "TextHeading",
+                                "text": "Detalhes"
+                            },
+                            {
+                                "type": "TextBody",
+                                "text": "${data.details}"
+                            },
+                            {
+                                "type": "OptIn",
+                                "name": "terms",
+                                "label": "Concordo com os termos",
+                                "required": true,
+                                "on-click-action": {
+                                    "name": "navigate",
+                                    "next": {
+                                        "type": "screen",
+                                        "name": "TERMOS"
+                                    },
+                                    "payload": {}
+                                }
+                            },
+                            {
+                                "type": "Footer",
+                                "label": "Confirmar Agendamento",
+                                "on-click-action": {
+                                    "name": "data_exchange",
+                                    "payload": {
+                                        "department": "${data.department}",
+                                        "date": "${data.date}",
+                                        "time": "${data.time}",
+                                        "name": "${data.name}",
+                                        "email": "${data.email}",
+                                        "phone": "${data.phone}",
+                                        "more_details": "${data.more_details}"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "id": "TERMOS",
+            "title": "Termos e Condições",
+            "layout": {
+                "type": "SingleColumnLayout",
+                "children": [
+                    {
+                        "type": "TextHeading",
+                        "text": "Nossos Termos"
+                    },
+                    {
+                        "type": "TextBody",
+                        "text": "Esse agendamento estará sujeito a aprovação e poderá ser alterado com aviso."
+                    }
+                ]
+            }
+        }
+    ]
+}

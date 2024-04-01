@@ -1,0 +1,6 @@
+.env
+private.pem
+public.pem
+/node_modules
+package-lock.json
+aiwhats-flows-api.yaml
